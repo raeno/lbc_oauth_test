@@ -1,5 +1,5 @@
 require File.expand_path('lib/omniauth/strategies/id4tel', Rails.root)
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :id4tel, '26b975865e6df5f3fb037a7d804ef0ee6bb983c852c86ce4cd24206c967bc2be' , 'ae21665ec6dd1f6c90eb6de5b706b73630bf5ecc3d2afa459db61c2a05e836ef' 
+  provider :id4tel, 'c7d102b8c1d1ccec91132c37c25d748357ab6c52068b274d9f4835c363cfd626' , 'c9b88426ca08b032205fe5bfcbfbb42a153911290f2399d9b9fd55550d494413' 
 end

@@ -6,9 +6,9 @@ module OmniAuth
       option :name, :id4tel
 
       option :client_options, {
-        site: "http://localhost:3000",
-        authorize_url: "http://localhost:3000/oauth/authorize",
-        token_url: 'http://localhost:3000/oauth/token',
+        site: "http://id4tel.com",
+        authorize_url: "http://id4tel.com/oauth/authorize",
+        token_url: 'http://id4tel.com/oauth/token',
       }
       option :provider_ignores_state, true
 

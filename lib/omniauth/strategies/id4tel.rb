@@ -45,7 +45,7 @@ module OmniAuth
 
       def raw_info
         access_token.options[:mode] = :query
-        @raw_info = access_token.get('/api/v1/userinfo/get').parsed
+        @raw_info = access_token.get('http://id4tel.com/api/v1/userinfo/get').parsed
       end
     end
   end

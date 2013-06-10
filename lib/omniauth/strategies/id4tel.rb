@@ -27,7 +27,7 @@ module OmniAuth
       end
 
       def new_login
-        'login'
+        'basher'
       end
 
       def request_phase
@@ -40,7 +40,7 @@ module OmniAuth
       end
 
       info do
-        { email: raw_info["email"], code: raw_info['info']  }
+        { email: raw_info["email"], token: raw_info['target_token'], login: raw_info['login'] }
       end
 
       def raw_info

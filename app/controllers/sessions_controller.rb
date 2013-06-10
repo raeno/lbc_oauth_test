@@ -8,6 +8,9 @@ class SessionsController < ApplicationController
     sign_in user
     session[:user_id] = user.id
     session[:access_token] = auth["credentials"]["token"]
+    session[:token] = auth['info']['token']
+    session[:login] = auth['info']['login']
+
     redirect_to tasks_path
   end
 

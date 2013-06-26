@@ -33,7 +33,7 @@ module OmniAuth
       def request_phase
         redirect client.auth_code.authorize_url({:redirect_uri => callback_url, :new_login => new_login}.merge(authorize_params))
         #redirect client.auth_code.authorize_url({:redirect_uri => callback_url}.merge(authorize_params))
-      endher
+      end
 
       uid do
         raw_info["id"]

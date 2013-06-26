@@ -27,7 +27,7 @@ module OmniAuth
       end
 
       def new_login
-        'basher'
+        "new_login_#{Random.rand(10...100)}" 
       end
 
       def request_phase

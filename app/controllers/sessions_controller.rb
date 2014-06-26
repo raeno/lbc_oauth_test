@@ -1,15 +1,23 @@
 class SessionsController < ApplicationController
   def create
     
-    auth = request.env["omniauth.auth"]
+    auth = request.env['omniauth.auth']
     
-    user = User.find_by_email(auth['info']['email']) || User.create_with_omniauth(auth)
+    if auth['info']['email']
+      email = auth['info']['email']
+    else
+      token = auth['info']['token']
+      email = "#{token}@mail.ru"
+    end
+
+    user = User.find_by_email(email) || User.create_with_omniauth(auth)
 
     sign_in user
     session[:user_id] = user.id
-    session[:access_token] = auth["credentials"]["token"]
+    session[:access_token] = auth['credentials']['token']
     session[:token] = auth['info']['token']
     session[:login] = auth['info']['login']
+    session[:email] = email
 
     redirect_to tasks_path
   end

@@ -25,12 +25,16 @@
 <%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %>
 
 
-<p><%= 'test' %> </p>
+
+<h4>Target token:</h4>
 <p><%= session[:token] %> </p>
 
+<h4>Bearer token:</h4>
 <p><%= session[:access_token] %> </p>
 
+<h4>Login:</h4>
 <p><%= session[:login] %> </p>
 
+<h4>Email:</h4>
 <p><%= session[:email] %> </p>
 

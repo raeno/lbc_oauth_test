@@ -1,0 +1,11 @@
+# do not forget to restart your server after any changes in this file
+oauth_providers:
+  - name: id4tel
+    client_id: 047c3603eb62edf46ae39209177a1729c3995655520ef5fc86867999cb0daf92
+    client_secret: 16049a142ee07dce70cc9d6b985b5392c0cb8aba77c285142759c9e562be8b24
+    host: http://localhost:3000
+    use_login: true
+    login: new_login_56
+    random_login: false # if random enabled, each oauth 'authorize' request generates new 'login' param value. Pattern: 'new_login_<1..10000>'
+    scope: 'email nickname address'
+    optional_fields: 'nickname city'

@@ -5,16 +5,16 @@ module OmniAuth
     class Id4tel < OmniAuth::Strategies::OAuth2
       option :name, :id4tel
 
+      OAUTH_CONFIG = YAML.load_file(Rails.root.join('config/oauth.yml'))
+
+      host = OAUTH_CONFIG['oauth_providers'].select { |p| p['name'] == 'id4tel'}.first['host']
+
       option :client_options, {
-        site: "https://id4tel.com",
-        authorize_url: "https://id4tel.com/oauth/authorize",
-        token_url: 'https://id4tel.com/oauth/token',
+        site: "#{host}",
+        authorize_url: "#{host}/oauth/authorize",
+        token_url: "#{host}/oauth/token",
       }
       option :provider_ignores_state, true
-
-      def request_phase
-        super
-      end
 
       def authorize_params
         super.tap do |params|
@@ -26,26 +26,47 @@ module OmniAuth
         end
       end
 
+      def config
+        @config ||= OAUTH_CONFIG['oauth_providers'].select { |p| p['name'] == 'id4tel'}.first
+      end
+
       def new_login
-        "new_login_#{Random.rand(100)}" 
+        if config['random_login']
+          "new_login_#{Random.rand(1000)}"
+        else
+          config['login'] || 'new_login'
+        end
+      end
+
+      def request_params
+        params = {:redirect_uri => callback_url,  :display => :popup }.merge(authorize_params)
+
+        params.merge!(:login => new_login) if config['use_login']
+        params.merge! :scope => config['scope'] if config['scope']
+        params.merge! :optional => config['optional_fields'] if config['optional_fields']
+        params
       end
 
       def request_phase
-        redirect client.auth_code.authorize_url({:redirect_uri => callback_url, :new_login => new_login}.merge(authorize_params))
-        #redirect client.auth_code.authorize_url({:redirect_uri => callback_url}.merge(authorize_params))
+        uri = client.auth_code.authorize_url request_params
+        redirect uri
       end
 
       uid do
-        raw_info["id"]
+        raw_info['id']
       end
 
       info do
-        { email: raw_info["email"], token: raw_info['target_token'], login: raw_info['login'] }
+        info_hash = { token: raw_info['target_token'], login: raw_info['login'] }
+        info_hash['email'] = raw_info['email'] if raw_info.key?('email')
+        puts raw_info
+        info_hash
       end
 
       def raw_info
         access_token.options[:mode] = :query
-        @raw_info = access_token.get('http://id4tel.com/api/v1/userinfo/get').parsed
+        host = config['host']
+        @raw_info = access_token.get("#{host}/api/oauth/v2/userinfo/get").parsed
       end
     end
   end

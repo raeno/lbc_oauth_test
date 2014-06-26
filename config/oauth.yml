@@ -1,6 +1,6 @@
 # do not forget to restart your server after any changes in this file
 oauth_providers:
-  - name: id4tel
+  - name: id4tel # this name should be the same as filename of strategy in lib/omniauth/strategies
     client_id: 047c3603eb62edf46ae39209177a1729c3995655520ef5fc86867999cb0daf92
     client_secret: 16049a142ee07dce70cc9d6b985b5392c0cb8aba77c285142759c9e562be8b24
     host: http://localhost:3000
